@@ -1,0 +1,144 @@
+﻿<Window x:Class="SudokuSolover.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SudokuSolover"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="733" Width="600">
+    <Window.Resources>
+        <Style x:Key="SudokuBox">
+            <Setter Property="Control.HorizontalAlignment" Value="Center" />
+            <Setter Property="Control.VerticalAlignment" Value="Center" />
+            <Setter Property="Control.Width" Value="67" />
+            <Setter Property="Control.Height" Value="66" />
+            <Setter Property="Control.HorizontalContentAlignment" Value="Center" />
+            <Setter Property="Control.FontSize" Value="48" />
+            <Setter Property="Control.Background" Value= "#FFECECBD"/>
+            
+        </Style>
+    </Window.Resources>
+    <Grid x:Name="MainGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="1" AutomationProperties.Name="0 0" Text="1" TextWrapping="NoWrap" MaxLines="1" MaxLength="1" FontSize="48" />
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="2" Grid.Column="0" AutomationProperties.Name="1 0"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="3" Grid.Column="0" AutomationProperties.Name="2 0"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="4" Grid.Column="0" AutomationProperties.Name="3 0"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="5" Grid.Column="0" AutomationProperties.Name="4 0"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="6" Grid.Column="0" AutomationProperties.Name="5 0"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="7" Grid.Column="0" AutomationProperties.Name="6 0"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="8" Grid.Column="0" AutomationProperties.Name="7 0"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="9" Grid.Column="0" AutomationProperties.Name="8 0"></TextBox>
+
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="1" Grid.Column="1" AutomationProperties.Name="0 1"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="2" Grid.Column="1" AutomationProperties.Name="1 1"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="3" Grid.Column="1" AutomationProperties.Name="2 1"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="4" Grid.Column="1" AutomationProperties.Name="3 1"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="5" Grid.Column="1" AutomationProperties.Name="4 1"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="6" Grid.Column="1" AutomationProperties.Name="5 1"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="7" Grid.Column="1" AutomationProperties.Name="6 1"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="8" Grid.Column="1" AutomationProperties.Name="7 1"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="9" Grid.Column="1" AutomationProperties.Name="8 1"></TextBox>
+
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="1" Grid.Column="2" AutomationProperties.Name="0 2"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="2" Grid.Column="2" AutomationProperties.Name="1 2"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="3" Grid.Column="2" AutomationProperties.Name="2 2"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="4" Grid.Column="2" AutomationProperties.Name="3 2"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="5" Grid.Column="2" AutomationProperties.Name="4 2"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="6" Grid.Column="2" AutomationProperties.Name="5 2"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="7" Grid.Column="2" AutomationProperties.Name="6 2"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="8" Grid.Column="2" AutomationProperties.Name="7 2"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="9" Grid.Column="2" AutomationProperties.Name="8 2"></TextBox>
+
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="1" Grid.Column="3" AutomationProperties.Name="0 3"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="2" Grid.Column="3" AutomationProperties.Name="1 3"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="3" Grid.Column="3" AutomationProperties.Name="2 3"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="4" Grid.Column="3" AutomationProperties.Name="3 3"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="5" Grid.Column="3" AutomationProperties.Name="4 3"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="6" Grid.Column="3" AutomationProperties.Name="5 3"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="7" Grid.Column="3" AutomationProperties.Name="6 3"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="8" Grid.Column="3" AutomationProperties.Name="7 3"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="9" Grid.Column="3" AutomationProperties.Name="8 3"></TextBox>
+
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="1" Grid.Column="4" AutomationProperties.Name="0 4"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="2" Grid.Column="4" AutomationProperties.Name="1 4"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="3" Grid.Column="4" AutomationProperties.Name="2 4"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="4" Grid.Column="4" AutomationProperties.Name="3 4"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="5" Grid.Column="4" AutomationProperties.Name="4 4"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="6" Grid.Column="4" AutomationProperties.Name="5 4"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="7" Grid.Column="4" AutomationProperties.Name="6 4"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="8" Grid.Column="4" AutomationProperties.Name="7 4"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="9" Grid.Column="4" AutomationProperties.Name="8 4"></TextBox>
+
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="1" Grid.Column="5" AutomationProperties.Name="0 5"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="2" Grid.Column="5" AutomationProperties.Name="1 5"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="3" Grid.Column="5" AutomationProperties.Name="2 5"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="4" Grid.Column="5" AutomationProperties.Name="3 5"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="5" Grid.Column="5" AutomationProperties.Name="4 5"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="6" Grid.Column="5" AutomationProperties.Name="5 5"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="7" Grid.Column="5" AutomationProperties.Name="6 5"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="8" Grid.Column="5" AutomationProperties.Name="7 5"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="9" Grid.Column="5" AutomationProperties.Name="8 5"></TextBox>
+
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="1" Grid.Column="6" AutomationProperties.Name="0 6"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="2" Grid.Column="6" AutomationProperties.Name="1 6"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="3" Grid.Column="6" AutomationProperties.Name="2 6"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="4" Grid.Column="6" AutomationProperties.Name="3 6"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="5" Grid.Column="6" AutomationProperties.Name="4 6"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="6" Grid.Column="6" AutomationProperties.Name="5 6"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="7" Grid.Column="6" AutomationProperties.Name="6 6"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="8" Grid.Column="6" AutomationProperties.Name="7 6"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="9" Grid.Column="6" AutomationProperties.Name="8 6"></TextBox>
+
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="1" Grid.Column="7" AutomationProperties.Name="0 7" ></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="2" Grid.Column="7" AutomationProperties.Name="1 7"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="3" Grid.Column="7" AutomationProperties.Name="2 7"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="4" Grid.Column="7" AutomationProperties.Name="3 7"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="5" Grid.Column="7" AutomationProperties.Name="4 7"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="6" Grid.Column="7" AutomationProperties.Name="5 7"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="7" Grid.Column="7" AutomationProperties.Name="6 7"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="8" Grid.Column="7" AutomationProperties.Name="7 7"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="9" Grid.Column="7" AutomationProperties.Name="8 7"></TextBox>
+
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="1" Grid.Column="8" AutomationProperties.Name="0 8"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="2" Grid.Column="8" AutomationProperties.Name="1 8"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="3" Grid.Column="8" AutomationProperties.Name="2 8"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="4" Grid.Column="8" AutomationProperties.Name="3 8"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="5" Grid.Column="8" AutomationProperties.Name="4 8"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="6" Grid.Column="8" AutomationProperties.Name="5 8"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="7" Grid.Column="8" AutomationProperties.Name="6 8"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="8" Grid.Column="8" AutomationProperties.Name="7 8"></TextBox>
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="9" Grid.Column="8" AutomationProperties.Name="8 8"></TextBox>
+
+
+        <Button x:Name="ReadButton" Content="Зчитати судоку з файлу" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="65" Grid.ColumnSpan="3" Click="ReadButton_Click" BorderThickness="3,3,3,3"/>
+        <Button x:Name="WriteButton" Content="Записати судоку в файл" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="65" Grid.ColumnSpan="3" Grid.Column="6" Click="WriteButton_Click" BorderThickness="3,3,3,3"/>
+        <Button x:Name="ClearButton" Content="Очистити поле" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Height="65" Width="201" Grid.ColumnSpan="3" BorderThickness="3,3,3,3" Click="ClearButton_Click"/>
+        <Button x:Name="SoloveButton" Content="Розвязати" Grid.Column="3" HorizontalAlignment="Center" Grid.Row="10" VerticalAlignment="Center" Grid.ColumnSpan="3" Click="SoloveButton_Click" Height="64" Width="201"/>
+
+
+    </Grid>
+</Window>
