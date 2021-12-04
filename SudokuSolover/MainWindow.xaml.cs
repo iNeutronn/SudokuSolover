@@ -118,7 +118,10 @@ namespace SudokuSolover
 
         private void SoloveButton_Click(object sender, RoutedEventArgs e)
         {
-
+            //TODO: Catch
+            Sudoku s = new Sudoku();
+            s.Set(sudoku);
+            SolutionInformation solutionInformation = s.Solove(Metod.Combi);
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
