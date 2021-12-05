@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SudokuSolover"
         mc:Ignorable="d"
-        Title="MainWindow" Height="733" Width="600">
+        Title="MainWindow" Height="733" Width="600" MinWidth="600" MinHeight="733">
     <Window.Resources>
         <Style x:Key="SudokuBox">
             <Setter Property="Control.HorizontalAlignment" Value="Center" />
@@ -15,7 +15,8 @@
             <Setter Property="Control.HorizontalContentAlignment" Value="Center" />
             <Setter Property="Control.FontSize" Value="48" />
             <Setter Property="Control.Background" Value= "#FFECECBD"/>
-            
+            <Setter Property="Control.BorderBrush" Value ="#FF1CA815"/>
+            <Setter Property="Control.BorderThickness" Value="2,2,2,2"/>
         </Style>
     </Window.Resources>
     <Grid x:Name="MainGrid">
@@ -41,9 +42,10 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="0.5*"></RowDefinition>
+            <RowDefinition Height="0.5*"></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="1" AutomationProperties.Name="0 0" Text="1" TextWrapping="NoWrap" MaxLines="1" MaxLength="1" FontSize="48" />
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="1" AutomationProperties.Name="0 0" Text="1" TextWrapping="NoWrap" MaxLines="1" MaxLength="1" FontSize="48"  />
         <TextBox Style="{StaticResource SudokuBox}" Grid.Row="2" Grid.Column="0" AutomationProperties.Name="1 0"></TextBox>
         <TextBox Style="{StaticResource SudokuBox}" Grid.Row="3" Grid.Column="0" AutomationProperties.Name="2 0"></TextBox>
         <TextBox Style="{StaticResource SudokuBox}" Grid.Row="4" Grid.Column="0" AutomationProperties.Name="3 0"></TextBox>
@@ -137,7 +139,16 @@
         <Button x:Name="ReadButton" Content="Зчитати судоку з файлу" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="65" Grid.ColumnSpan="3" Click="ReadButton_Click" BorderThickness="3,3,3,3"/>
         <Button x:Name="WriteButton" Content="Записати судоку в файл" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="65" Grid.ColumnSpan="3" Grid.Column="6" Click="WriteButton_Click" BorderThickness="3,3,3,3"/>
         <Button x:Name="ClearButton" Content="Очистити поле" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Height="65" Width="201" Grid.ColumnSpan="3" BorderThickness="3,3,3,3" Click="ClearButton_Click"/>
-        <Button x:Name="SoloveButton" Content="Розвязати" Grid.Column="3" HorizontalAlignment="Center" Grid.Row="10" VerticalAlignment="Center" Grid.ColumnSpan="3" Click="SoloveButton_Click" Height="64" Width="201"/>
+        <Button x:Name="SoloveButton" Content="Розвязати" Grid.Column="3" HorizontalAlignment="Center" Grid.Row="10" VerticalAlignment="Center" Grid.ColumnSpan="3" Click="SoloveButton_Click" Height="64" Width="201" Grid.RowSpan="2"/>
+        <ComboBox HorizontalAlignment="Center" Grid.Row="11" VerticalAlignment="Center" Width="200" Height="33" Grid.ColumnSpan="3" SelectedIndex="10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+            <ComboBoxItem Content="Останнє можливе"/>
+            <ComboBoxItem Content="Рекурсивний"/>
+            <ComboBoxItem Content="Комбінований"/>
+        </ComboBox>
+        <Label Content="Виберіть метод розв'язання:" HorizontalAlignment="Center" Grid.Row="10" VerticalAlignment="Center" Width="200" Height="31" Grid.ColumnSpan="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <GridSplitter Grid.Column="7" Grid.Row="10" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.RowSpan="2" Height="64" Width="0" HorizontalAlignment="Center"/>
+        <Label Grid.Column="6" HorizontalAlignment="Left" Margin="1,0,0,0" Grid.Row="10" Content="INF" VerticalAlignment="Center" Grid.RowSpan="2" Grid.ColumnSpan="2" Height="64" Width="99" />
+        <Label Content="Inf" Grid.Column="7" HorizontalAlignment="Left" Margin="38,1,0,0" Grid.Row="10" VerticalAlignment="Top" Grid.ColumnSpan="2" Height="64" Width="95" Grid.RowSpan="2"/>
 
 
     </Grid>

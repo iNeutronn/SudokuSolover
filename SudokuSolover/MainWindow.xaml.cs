@@ -81,11 +81,11 @@ namespace SudokuSolover
             catch (IndexOutOfRangeException)
             {
                 MessageBox.Show("Невірний формат");
-            } 
-            //catch
-            //{
-            //    MessageBox.Show("Помилка зчитування");
-            //}
+            }
+            catch
+            {
+                MessageBox.Show("Помилка зчитування");
+            }
         }
 
         private void WriteButton_Click(object sender, RoutedEventArgs e)
