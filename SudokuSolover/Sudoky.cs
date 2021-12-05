@@ -9,7 +9,7 @@ namespace SudokuSolover
 
         int[,] Input_Sudoky;
         int[,] Output_Sudoku;
-        private int[,] SoloveSimplest(int[,] sudoku_Field)
+        private static int[,] SoloveSimplest(int[,] sudoku_Field)
         {
             bool f = true;//перевіряєм чи алгоритм вніс хоч якісь зміни, якщо ні то далі він уже безсилий
             while (f)
@@ -40,20 +40,20 @@ namespace SudokuSolover
             return sudoku_Field;
         }
 
-        private List<int> GetAllPossibleOptions(int x, int y, int[,] P)
+        private static List<int> GetAllPossibleOptions(int x, int y, int[,] P)
         {
-            HashSet<int> col = new HashSet<int>();
+            HashSet<int> col = new();
             for (int i = 0; i < 9; i++)
                 if (P[x, i] != 0)
                     col.Add(P[x, i]);
 
-            HashSet<int> row = new HashSet<int>();
+            HashSet<int> row = new();
             for (int i = 0; i < 9; i++)
                 if (P[i, y] != 0)
                     row.Add(P[i, y]);
 
 
-            HashSet<int> block = new HashSet<int>();
+            HashSet<int> block = new();
             int sX = 3 * (x / 3);
             int sY = 3 * (y / 3);//обираэм блок який перевіряєм
 
@@ -65,7 +65,7 @@ namespace SudokuSolover
 
 
 
-            List<int> AllPossibleOptions = new List<int>();
+            List<int> AllPossibleOptions = new();
             for (int i = 1; i < 10; i++)
                 if (!col.Contains(i) && !row.Contains(i) && !block.Contains(i))
                     AllPossibleOptions.Add(i);
@@ -74,7 +74,7 @@ namespace SudokuSolover
 
         public SolutionInformation Solove(Metod m)
         {
-            Stopwatch sw = new Stopwatch();
+            Stopwatch sw = new();
             sw.Start();
             switch (m)
             {
@@ -91,7 +91,7 @@ namespace SudokuSolover
             }
             sw.Stop();
 
-            SolutionInformation inf = new SolutionInformation();
+            SolutionInformation inf = new();
             inf.Ticks = sw.ElapsedTicks;
             inf.Miliseconds = (int)sw.ElapsedMilliseconds;
             inf.Fiel = Output_Sudoku;

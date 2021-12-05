@@ -20,7 +20,7 @@ namespace SudokuSolover
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    
+
     public partial class MainWindow : Window
     {
         int[,] sudoku = new int[9, 9];
@@ -29,9 +29,10 @@ namespace SudokuSolover
             InitializeComponent();
             foreach (UIElement item in MainGrid.Children)
             {
-                if (item is TextBox)
-                    ((TextBox)item).TextChanged += TextBox_TextChanged;
+                if (item is TextBox box)
+                    box.TextChanged += TextBox_TextChanged;
             }
+            MetodComboBox.SelectedIndex = 2;
         }
         private void UpdateView()
         {
@@ -59,7 +60,7 @@ namespace SudokuSolover
                     for (int j = 0; j < 9; j++)
                     {
                         int n = int.Parse(inp[j]);
-                        if (n < 0 || n > 9)
+                        if (n is < 0 or > 9)
                             throw new FormatException();
                         sudoku[j, i] = n;
                     }
@@ -104,7 +105,7 @@ namespace SudokuSolover
                 sw.Close();
                 MessageBox.Show("Судоку записане в файл OUTPUT.TXT");
             }
-            catch 
+            catch
             {
                 MessageBox.Show("Помилка запису");
             }
@@ -119,9 +120,22 @@ namespace SudokuSolover
         private void SoloveButton_Click(object sender, RoutedEventArgs e)
         {
             //TODO: Catch
-            Sudoku s = new Sudoku();
+            Sudoku s = new();
             s.Set(sudoku);
-            SolutionInformation solutionInformation = s.Solove(Metod.Combi);
+            SolutionInformation inf = MetodComboBox.SelectedIndex switch
+            {
+                0 => s.Solove(Metod.LastPossible),
+                1 => s.Solove(Metod.Recourse),
+                2 => s.Solove(Metod.Combi),
+                _ => throw new Exception(),
+            };
+            LeftInfLabel.Content = "Вирішене: " + (inf.IsItSoloved ? "Так" : "Ні") + "\n";
+            LeftInfLabel.Content += "Мілісекунди:" + inf.Miliseconds + "\n";
+            LeftInfLabel.Content += "Тіки:" + inf.Ticks;
+
+            
+
+
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)

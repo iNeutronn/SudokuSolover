@@ -140,15 +140,14 @@
         <Button x:Name="WriteButton" Content="Записати судоку в файл" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="65" Grid.ColumnSpan="3" Grid.Column="6" Click="WriteButton_Click" BorderThickness="3,3,3,3"/>
         <Button x:Name="ClearButton" Content="Очистити поле" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Height="65" Width="201" Grid.ColumnSpan="3" BorderThickness="3,3,3,3" Click="ClearButton_Click"/>
         <Button x:Name="SoloveButton" Content="Розвязати" Grid.Column="3" HorizontalAlignment="Center" Grid.Row="10" VerticalAlignment="Center" Grid.ColumnSpan="3" Click="SoloveButton_Click" Height="64" Width="201" Grid.RowSpan="2"/>
-        <ComboBox HorizontalAlignment="Center" Grid.Row="11" VerticalAlignment="Center" Width="200" Height="33" Grid.ColumnSpan="3" SelectedIndex="10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+        <ComboBox x:Name="MetodComboBox" HorizontalAlignment="Center" Grid.Row="11" VerticalAlignment="Center" Width="200" Height="33" Grid.ColumnSpan="3" SelectedIndex="10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
             <ComboBoxItem Content="Останнє можливе"/>
             <ComboBoxItem Content="Рекурсивний"/>
             <ComboBoxItem Content="Комбінований"/>
         </ComboBox>
         <Label Content="Виберіть метод розв'язання:" HorizontalAlignment="Center" Grid.Row="10" VerticalAlignment="Center" Width="200" Height="31" Grid.ColumnSpan="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         <GridSplitter Grid.Column="7" Grid.Row="10" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.RowSpan="2" Height="64" Width="0" HorizontalAlignment="Center"/>
-        <Label Grid.Column="6" HorizontalAlignment="Left" Margin="1,0,0,0" Grid.Row="10" Content="INF" VerticalAlignment="Center" Grid.RowSpan="2" Grid.ColumnSpan="2" Height="64" Width="99" />
-        <Label Content="Inf" Grid.Column="7" HorizontalAlignment="Left" Margin="38,1,0,0" Grid.Row="10" VerticalAlignment="Top" Grid.ColumnSpan="2" Height="64" Width="95" Grid.RowSpan="2"/>
+        <Label x:Name="LeftInfLabel" Grid.Column="6" HorizontalAlignment="Left" Margin="1,0,0,0" Grid.Row="10" Content="INF" VerticalAlignment="Center" Grid.RowSpan="2" Grid.ColumnSpan="2" Height="64" Width="99" />
 
 
     </Grid>
