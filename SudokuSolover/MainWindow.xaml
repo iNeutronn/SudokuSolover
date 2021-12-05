@@ -148,6 +148,8 @@
         <Label Content="Виберіть метод розв'язання:" HorizontalAlignment="Center" Grid.Row="10" VerticalAlignment="Center" Width="200" Height="31" Grid.ColumnSpan="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         <GridSplitter Grid.Column="7" Grid.Row="10" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.RowSpan="2" Height="64" Width="0" HorizontalAlignment="Center"/>
         <Label x:Name="LeftInfLabel" Grid.Column="6" HorizontalAlignment="Left" Margin="1,0,0,0" Grid.Row="10" Content="INF" VerticalAlignment="Center" Grid.RowSpan="2" Grid.ColumnSpan="2" Height="64" Width="99" />
+        <Label Content="Час на розв'язок(мc):" Grid.Column="7" HorizontalAlignment="Left" Grid.Row="10" VerticalAlignment="Center" Height="31" Width="95" Grid.ColumnSpan="2" Margin="38,0,0,0" FontSize="9" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" IsHitTestVisible="False"/>
+        <TextBox x:Name="TimeTextBox" Grid.ColumnSpan="2" Grid.Column="7" HorizontalAlignment="Left" Margin="33,0,0,0" Grid.Row="11" Text="10000" TextWrapping="Wrap" VerticalAlignment="Center" Width="100" Height="33" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
 
 
     </Grid>

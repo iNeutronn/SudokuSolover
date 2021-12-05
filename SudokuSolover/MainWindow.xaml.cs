@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Automation;
@@ -40,12 +41,19 @@ namespace SudokuSolover
             {
                 if (item is not TextBox)
                     continue;
-                TextBox t = item as TextBox;
-                t.GetValue(AutomationProperties.NameProperty);
-                string[] st = t.GetValue(AutomationProperties.NameProperty).ToString().Split();
-                int x = int.Parse(st[0]);
-                int y = int.Parse(st[1]);
-                t.Text = sudoku[y, x] == 0 ? " " : sudoku[y, x].ToString();
+                try
+                {
+                    TextBox t = item as TextBox;
+                    t.GetValue(AutomationProperties.NameProperty);
+                    string[] st = t.GetValue(AutomationProperties.NameProperty).ToString().Split();
+                    int x = int.Parse(st[0]);
+                    int y = int.Parse(st[1]);
+                    t.Text = sudoku[y, x] == 0 ? " " : sudoku[y, x].ToString();
+                }
+                catch(FormatException)
+                {
+                    
+                }
             }
         }
         private void ReadButton_Click(object sender, RoutedEventArgs e)
@@ -117,11 +125,14 @@ namespace SudokuSolover
             UpdateView();
         }
 
+        
         private void SoloveButton_Click(object sender, RoutedEventArgs e)
         {
+
             //TODO: Catch
-            Sudoku s = new();
+            Sudoku s = new Sudoku();
             s.Set(sudoku);
+            s.SetTime(int.Parse(TimeTextBox.Text));
             SolutionInformation inf = MetodComboBox.SelectedIndex switch
             {
                 0 => s.Solove(Metod.LastPossible),
@@ -133,7 +144,8 @@ namespace SudokuSolover
             LeftInfLabel.Content += "Мілісекунди:" + inf.Miliseconds + "\n";
             LeftInfLabel.Content += "Тіки:" + inf.Ticks;
 
-            
+            sudoku = inf.Fiel;
+            UpdateView();
 
 
         }
