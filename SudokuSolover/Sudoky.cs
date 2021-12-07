@@ -9,7 +9,7 @@ namespace SudokuSolover
 
         int[,] Input_Sudoky;
         int[,] Output_Sudoku;
-        Stopwatch sw;
+        private Stopwatch sw;
         
         private static int[,] SoloveSimplest(int[,] sudoku_Field)
         {
@@ -33,7 +33,7 @@ namespace SudokuSolover
                             }
                             else if (AllPossibleOptions.Count == 0)
                             {
-                                throw new Exception();
+                                throw new NoSolutionExeption(sudoku_Field);
                             }
                         }
                     }
@@ -58,7 +58,7 @@ namespace SudokuSolover
 
             HashSet<int> block = new();
             int sX = 3 * (x / 3);
-            int sY = 3 * (y / 3);//обираэм блок який перевіряєм
+            int sY = 3 * (y / 3);
 
             for (int yP = 0; yP < 3; yP++)
                 for (int xP = 0; xP < 3; xP++)
@@ -77,7 +77,6 @@ namespace SudokuSolover
 
         public SolutionInformation Solove(Metod m)
         {
-            
             sw = new();
             sw.Start();
             switch (m)
@@ -121,9 +120,9 @@ namespace SudokuSolover
         }
         public void Set(int[,] sudoky)
         {
-            //TODO: Cheak inf
+           
             if (!CheackSudokuСorrectness(sudoky))
-                throw new Exception();
+                throw new NoSolutionExeption(sudoky);
             Input_Sudoky = sudoky;
         }
         private static bool CheackSudokuСorrectness(int[,] inp)

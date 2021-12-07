@@ -132,7 +132,8 @@ namespace SudokuSolover
 
             if (MetodComboBox.SelectedIndex == 0)
                 MessageBox.Show("Спосіб останнього можливого найшвидший, та в деяких випадках він безсилий. \n Найоптимальнішив варіантом буде рекурсивний спосіб.", "Увага!", MessageBoxButton.OK, MessageBoxImage.Information);
-
+            else if (MetodComboBox.SelectedIndex == 2)
+                MessageBox.Show("Комбінативний спосіб вимагає виклик способа останнього можливого після кожної інерації рекурсії.", "Увага!", MessageBoxButton.OK, MessageBoxImage.Information);
 
             Sudoku s = new();
             s.Set(sudoku);
