@@ -10,7 +10,7 @@ namespace SudokuSolover
         int[,] Input_Sudoky;
         int[,] Output_Sudoku;
         Stopwatch sw;
-        int maxtime = 10000;
+        
         private static int[,] SoloveSimplest(int[,] sudoku_Field)
         {
             bool f = true;//перевіряєм чи алгоритм вніс хоч якісь зміни, якщо ні то далі він уже безсилий
@@ -42,10 +42,7 @@ namespace SudokuSolover
             return sudoku_Field;
         }
 
-        public void SetTime(int t)
-        {
-            maxtime = t;
-        }
+        
         private static List<int> GetAllPossibleOptions(int x, int y, int[,] P)
         {
             HashSet<int> col = new();
@@ -129,11 +126,11 @@ namespace SudokuSolover
                 throw new Exception();
             Input_Sudoky = sudoky;
         }
-        private bool CheackSudokuСorrectness(int[,] inp)
+        private static bool CheackSudokuСorrectness(int[,] inp)
         {
             for (int i = 0; i < 9; i++)
                 for (int j = 0; j < 9; j++)
-                    if (GetAllPossibleOptions(i, j,inp).Count == 0)
+                    if (inp[i,j] == 0 && GetAllPossibleOptions(i, j,inp).Count == 0)
                         return false;
             return true;
         }
@@ -142,8 +139,7 @@ namespace SudokuSolover
             if (combi)
                 Pole = SoloveSimplest(Pole);
 
-            //if (sw.ElapsedMilliseconds > maxtime)
-            //    return false;
+           
 
             for (int x = 0; x < 9; x++)
                 for (int y = 0; y < 9; y++)

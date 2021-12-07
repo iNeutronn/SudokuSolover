@@ -45,7 +45,7 @@
             <RowDefinition Height="0.5*"></RowDefinition>
             <RowDefinition Height="0.5*"></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="1" AutomationProperties.Name="0 0" Text="1" TextWrapping="NoWrap" MaxLines="1" MaxLength="1" FontSize="48"  />
+        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="1" Grid.Column="0" AutomationProperties.Name="0 0"   />
         <TextBox Style="{StaticResource SudokuBox}" Grid.Row="2" Grid.Column="0" AutomationProperties.Name="1 0"></TextBox>
         <TextBox Style="{StaticResource SudokuBox}" Grid.Row="3" Grid.Column="0" AutomationProperties.Name="2 0"></TextBox>
         <TextBox Style="{StaticResource SudokuBox}" Grid.Row="4" Grid.Column="0" AutomationProperties.Name="3 0"></TextBox>
@@ -147,10 +147,7 @@
         </ComboBox>
         <Label Content="Виберіть метод розв'язання:" HorizontalAlignment="Center" Grid.Row="10" VerticalAlignment="Center" Width="200" Height="31" Grid.ColumnSpan="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         <GridSplitter Grid.Column="7" Grid.Row="10" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.RowSpan="2" Height="64" Width="0" HorizontalAlignment="Center"/>
-        <Label x:Name="LeftInfLabel" Grid.Column="6" HorizontalAlignment="Left" Margin="1,0,0,0" Grid.Row="10" Content="INF" VerticalAlignment="Center" Grid.RowSpan="2" Grid.ColumnSpan="2" Height="64" Width="99" />
-        <Label Content="Час на розв'язок(мc):" Grid.Column="7" HorizontalAlignment="Left" Grid.Row="10" VerticalAlignment="Center" Height="31" Width="95" Grid.ColumnSpan="2" Margin="38,0,0,0" FontSize="9" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" IsHitTestVisible="False"/>
-        <TextBox x:Name="TimeTextBox" Grid.ColumnSpan="2" Grid.Column="7" HorizontalAlignment="Left" Margin="33,0,0,0" Grid.Row="11" Text="10000" TextWrapping="Wrap" VerticalAlignment="Center" Width="100" Height="33" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-
+        <Label x:Name="LeftInfLabel" Grid.Column="6" HorizontalAlignment="Center" Grid.Row="10"  Grid.RowSpan="2" VerticalContentAlignment="Center" Width="201" RenderTransformOrigin="0.5,0.5" Margin="0,1,0,-1" Grid.ColumnSpan="3" HorizontalContentAlignment="Center" />
 
     </Grid>
 </Window>

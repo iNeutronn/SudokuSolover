@@ -33,7 +33,8 @@ namespace SudokuSolover
                 if (item is TextBox box)
                     box.TextChanged += TextBox_TextChanged;
             }
-            MetodComboBox.SelectedIndex = 2;
+            MetodComboBox.SelectedIndex = 1;
+            LeftInfLabel.Content = "Вирішене: - \n Мілісекунди: - \n Тіки: -";
         }
         private void UpdateView()
         {
@@ -48,7 +49,7 @@ namespace SudokuSolover
                     string[] st = t.GetValue(AutomationProperties.NameProperty).ToString().Split();
                     int x = int.Parse(st[0]);
                     int y = int.Parse(st[1]);
-                    t.Text = sudoku[y, x] == 0 ? " " : sudoku[y, x].ToString();
+                    t.Text = sudoku[y, x] == 0 ? "" : sudoku[y, x].ToString();
                 }
                 catch(FormatException)
                 {
@@ -81,19 +82,19 @@ namespace SudokuSolover
             }
             catch (FileNotFoundException)
             {
-                MessageBox.Show("Не знайдено файл INPUT.TXT");
+                MessageBox.Show("Не знайдено файл INPUT.TXT","Помилка!",MessageBoxButton.OK,MessageBoxImage.Error);
             }
             catch (FormatException)
             {
-                MessageBox.Show("Невірний формат");
+                MessageBox.Show("Невірний формат", "Помилка!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (IndexOutOfRangeException)
             {
-                MessageBox.Show("Невірний формат");
+                MessageBox.Show("Невірний формат", "Помилка!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch
             {
-                MessageBox.Show("Помилка зчитування");
+                MessageBox.Show("Помилка зчитування", "Помилка!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -115,7 +116,7 @@ namespace SudokuSolover
             }
             catch
             {
-                MessageBox.Show("Помилка запису");
+                MessageBox.Show("Помилка запису", "Помилка!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -129,10 +130,13 @@ namespace SudokuSolover
         private void SoloveButton_Click(object sender, RoutedEventArgs e)
         {
 
-            //TODO: Catch
-            Sudoku s = new Sudoku();
+            if (MetodComboBox.SelectedIndex == 0)
+                MessageBox.Show("Спосіб останнього можливого найшвидший, та в деяких випадках він безсилий. \n Найоптимальнішив варіантом буде рекурсивний спосіб.", "Увага!", MessageBoxButton.OK, MessageBoxImage.Information);
+
+
+            Sudoku s = new();
             s.Set(sudoku);
-            s.SetTime(int.Parse(TimeTextBox.Text));
+           
             SolutionInformation inf = MetodComboBox.SelectedIndex switch
             {
                 0 => s.Solove(Metod.LastPossible),
@@ -143,6 +147,8 @@ namespace SudokuSolover
             LeftInfLabel.Content = "Вирішене: " + (inf.IsItSoloved ? "Так" : "Ні") + "\n";
             LeftInfLabel.Content += "Мілісекунди:" + inf.Miliseconds + "\n";
             LeftInfLabel.Content += "Тіки:" + inf.Ticks;
+
+            
 
             sudoku = inf.Fiel;
             UpdateView();
@@ -174,7 +180,7 @@ namespace SudokuSolover
             }
             catch (FormatException)
             {
-                MessageBox.Show("Невірний формат");
+                MessageBox.Show("Невірний формат", "Помилка!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }
