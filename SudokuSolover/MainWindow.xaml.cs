@@ -27,6 +27,7 @@ namespace SudokuSolover
         int[,] sudoku = new int[9, 9];
         public MainWindow()
         {
+            
             InitializeComponent();
             foreach (UIElement item in MainGrid.Children)
             {

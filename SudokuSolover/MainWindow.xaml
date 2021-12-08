@@ -5,8 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SudokuSolover"
         mc:Ignorable="d"
-        Title="MainWindow" Height="733" Width="600" MinWidth="600" MinHeight="733">
+        Title="MainWindow" Height="800" Width="780" MinWidth="600" MinHeight="733" Background="#FFC9C9C9"
+    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
     <Window.Resources>
+        <Style TargetType="Button" x:Key="EclipceBorderedButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="20"
+                                Background="{TemplateBinding Background}">
+
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter  Property="Control.Background" Value="White"/>
+        </Style>
         <Style x:Key="SudokuBox">
             <Setter Property="Control.HorizontalAlignment" Value="Center" />
             <Setter Property="Control.VerticalAlignment" Value="Center" />
@@ -14,10 +30,332 @@
             <Setter Property="Control.Height" Value="66" />
             <Setter Property="Control.HorizontalContentAlignment" Value="Center" />
             <Setter Property="Control.FontSize" Value="48" />
-            <Setter Property="Control.Background" Value= "#FFECECBD"/>
-            <Setter Property="Control.BorderBrush" Value ="#FF1CA815"/>
-            <Setter Property="Control.BorderThickness" Value="2,2,2,2"/>
+            <Setter Property="Control.Background" Value="#FF979797"/>
+            <Setter Property="Control.BorderBrush" Value ="#FF1E91C7"/>
+            <Setter Property="Control.BorderThickness" Value="3,3,3,3"/>
+            
         </Style>
+        <Style x:Key="LabelStyle" TargetType="{x:Type Label}">
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="Background" Value="#FFD6D6D6"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Top"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Label}">
+                        <Border CornerRadius="10"  Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="FocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" StrokeDashArray="1 2" SnapsToDevicePixels="true" StrokeThickness="1" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="TextBox.Static.Background" Color="#FFFFFFFF"/>
+        <Style x:Key="ComboBoxEditableTextBox" TargetType="{x:Type TextBox}">
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="AllowDrop" Value="true"/>
+            <Setter Property="MinWidth" Value="0"/>
+            <Setter Property="MinHeight" Value="0"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <ScrollViewer x:Name="PART_ContentHost" Background="Transparent" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <LinearGradientBrush x:Key="ComboBox.Static.Background" EndPoint="0,1" StartPoint="0,0">
+            <GradientStop Color="#FFF0F0F0" Offset="0.0"/>
+            <GradientStop Color="#FFE5E5E5" Offset="1.0"/>
+        </LinearGradientBrush>
+        <SolidColorBrush x:Key="ComboBox.Static.Border" Color="#FFACACAC"/>
+        <SolidColorBrush x:Key="ComboBox.Static.Glyph" Color="#FF606060"/>
+        <SolidColorBrush x:Key="ComboBox.Static.Editable.Background" Color="#FFFFFFFF"/>
+        <SolidColorBrush x:Key="ComboBox.Static.Editable.Border" Color="#FFABADB3"/>
+        <SolidColorBrush x:Key="ComboBox.Static.Editable.Button.Background" Color="Transparent"/>
+        <SolidColorBrush x:Key="ComboBox.Static.Editable.Button.Border" Color="Transparent"/>
+        <LinearGradientBrush x:Key="ComboBox.MouseOver.Background" EndPoint="0,1" StartPoint="0,0">
+            <GradientStop Color="#FFECF4FC" Offset="0.0"/>
+            <GradientStop Color="#FFDCECFC" Offset="1.0"/>
+        </LinearGradientBrush>
+        <SolidColorBrush x:Key="ComboBox.MouseOver.Border" Color="#FF7EB4EA"/>
+        <SolidColorBrush x:Key="ComboBox.MouseOver.Glyph" Color="#FF000000"/>
+        <SolidColorBrush x:Key="ComboBox.MouseOver.Editable.Background" Color="#FFFFFFFF"/>
+        <SolidColorBrush x:Key="ComboBox.MouseOver.Editable.Border" Color="#FF7EB4EA"/>
+        <LinearGradientBrush x:Key="ComboBox.MouseOver.Editable.Button.Background" EndPoint="0,1" StartPoint="0,0">
+            <GradientStop Color="#FFEBF4FC" Offset="0.0"/>
+            <GradientStop Color="#FFDCECFC" Offset="1.0"/>
+        </LinearGradientBrush>
+        <SolidColorBrush x:Key="ComboBox.MouseOver.Editable.Button.Border" Color="#FF7EB4EA"/>
+        <LinearGradientBrush x:Key="ComboBox.Pressed.Background" EndPoint="0,1" StartPoint="0,0">
+            <GradientStop Color="#FFDAECFC" Offset="0.0"/>
+            <GradientStop Color="#FFC4E0FC" Offset="1.0"/>
+        </LinearGradientBrush>
+        <SolidColorBrush x:Key="ComboBox.Pressed.Border" Color="#FF569DE5"/>
+        <SolidColorBrush x:Key="ComboBox.Pressed.Glyph" Color="#FF000000"/>
+        <SolidColorBrush x:Key="ComboBox.Pressed.Editable.Background" Color="#FFFFFFFF"/>
+        <SolidColorBrush x:Key="ComboBox.Pressed.Editable.Border" Color="#FF569DE5"/>
+        <LinearGradientBrush x:Key="ComboBox.Pressed.Editable.Button.Background" EndPoint="0,1" StartPoint="0,0">
+            <GradientStop Color="#FFDAEBFC" Offset="0.0"/>
+            <GradientStop Color="#FFC4E0FC" Offset="1.0"/>
+        </LinearGradientBrush>
+        <SolidColorBrush x:Key="ComboBox.Pressed.Editable.Button.Border" Color="#FF569DE5"/>
+        <SolidColorBrush x:Key="ComboBox.Disabled.Background" Color="#FFF0F0F0"/>
+        <SolidColorBrush x:Key="ComboBox.Disabled.Border" Color="#FFD9D9D9"/>
+        <SolidColorBrush x:Key="ComboBox.Disabled.Glyph" Color="#FFBFBFBF"/>
+        <SolidColorBrush x:Key="ComboBox.Disabled.Editable.Background" Color="#FFFFFFFF"/>
+        <SolidColorBrush x:Key="ComboBox.Disabled.Editable.Border" Color="#FFBFBFBF"/>
+        <SolidColorBrush x:Key="ComboBox.Disabled.Editable.Button.Background" Color="Transparent"/>
+        <SolidColorBrush x:Key="ComboBox.Disabled.Editable.Button.Border" Color="Transparent"/>
+        <Style x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="IsTabStop" Value="false"/>
+            <Setter Property="Focusable" Value="false"/>
+            <Setter Property="ClickMode" Value="Press"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Border CornerRadius="10" x:Name="templateRoot" Background="{StaticResource ComboBox.Static.Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{StaticResource ComboBox.Static.Border}" SnapsToDevicePixels="true">
+                            <Border x:Name="splitBorder" BorderThickness="1" BorderBrush="Transparent" HorizontalAlignment="Right" Margin="0" SnapsToDevicePixels="true" Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}">
+                                <Path x:Name="arrow" Data="F1 M 0,0 L 2.667,2.66665 L 5.3334,0 L 5.3334,-1.78168 L 2.6667,0.88501 L0,-1.78168 L0,0 Z" Fill="{StaticResource ComboBox.Static.Glyph}" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center"/>
+                            </Border>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" Value="true"/>
+                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="false"/>
+                                    <Condition Binding="{Binding IsPressed, RelativeSource={RelativeSource Self}}" Value="false"/>
+                                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="true"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Background" TargetName="templateRoot" Value="{StaticResource ComboBox.Static.Editable.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="templateRoot" Value="{StaticResource ComboBox.Static.Editable.Border}"/>
+                                <Setter Property="Background" TargetName="splitBorder" Value="{StaticResource ComboBox.Static.Editable.Button.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="splitBorder" Value="{StaticResource ComboBox.Static.Editable.Button.Border}"/>
+                            </MultiDataTrigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Fill" TargetName="arrow" Value="{StaticResource ComboBox.MouseOver.Glyph}"/>
+                            </Trigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true"/>
+                                    <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" Value="false"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Background" TargetName="templateRoot" Value="{StaticResource ComboBox.MouseOver.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="templateRoot" Value="{StaticResource ComboBox.MouseOver.Border}"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true"/>
+                                    <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" Value="true"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Background" TargetName="templateRoot" Value="{StaticResource ComboBox.MouseOver.Editable.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="templateRoot" Value="{StaticResource ComboBox.MouseOver.Editable.Border}"/>
+                                <Setter Property="Background" TargetName="splitBorder" Value="{StaticResource ComboBox.MouseOver.Editable.Button.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="splitBorder" Value="{StaticResource ComboBox.MouseOver.Editable.Button.Border}"/>
+                            </MultiDataTrigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Fill" TargetName="arrow" Value="{StaticResource ComboBox.Pressed.Glyph}"/>
+                            </Trigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsPressed, RelativeSource={RelativeSource Self}}" Value="true"/>
+                                    <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" Value="false"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Background" TargetName="templateRoot" Value="{StaticResource ComboBox.Pressed.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="templateRoot" Value="{StaticResource ComboBox.Pressed.Border}"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsPressed, RelativeSource={RelativeSource Self}}" Value="true"/>
+                                    <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" Value="true"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Background" TargetName="templateRoot" Value="{StaticResource ComboBox.Pressed.Editable.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="templateRoot" Value="{StaticResource ComboBox.Pressed.Editable.Border}"/>
+                                <Setter Property="Background" TargetName="splitBorder" Value="{StaticResource ComboBox.Pressed.Editable.Button.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="splitBorder" Value="{StaticResource ComboBox.Pressed.Editable.Button.Border}"/>
+                            </MultiDataTrigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Fill" TargetName="arrow" Value="{StaticResource ComboBox.Disabled.Glyph}"/>
+                            </Trigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false"/>
+                                    <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" Value="false"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Background" TargetName="templateRoot" Value="{StaticResource ComboBox.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="templateRoot" Value="{StaticResource ComboBox.Disabled.Border}"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false"/>
+                                    <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" Value="true"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Background" TargetName="templateRoot" Value="{StaticResource ComboBox.Disabled.Editable.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="templateRoot" Value="{StaticResource ComboBox.Disabled.Editable.Border}"/>
+                                <Setter Property="Background" TargetName="splitBorder" Value="{StaticResource ComboBox.Disabled.Editable.Button.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="splitBorder" Value="{StaticResource ComboBox.Disabled.Editable.Button.Border}"/>
+                            </MultiDataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <ControlTemplate x:Key="ComboBoxEditableTemplate" TargetType="{x:Type ComboBox}">
+            <Grid x:Name="templateRoot" SnapsToDevicePixels="true">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition MinWidth="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" Width="0"/>
+                </Grid.ColumnDefinitions>
+                <Popup x:Name="PART_Popup" AllowsTransparency="true" Grid.ColumnSpan="2" IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}" Placement="Bottom" PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
+                    <theme:SystemDropShadowChrome x:Name="shadow" Color="Transparent" MinWidth="{Binding ActualWidth, ElementName=templateRoot}" MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                        <Border x:Name="dropDownBorder" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" BorderThickness="1" BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}">
+                            <ScrollViewer x:Name="DropDownScrollViewer">
+                                <Grid x:Name="grid" RenderOptions.ClearTypeHint="Enabled">
+                                    <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="0">
+                                        <Rectangle x:Name="opaqueRect" Fill="{Binding Background, ElementName=dropDownBorder}" Height="{Binding ActualHeight, ElementName=dropDownBorder}" Width="{Binding ActualWidth, ElementName=dropDownBorder}"/>
+                                    </Canvas>
+                                    <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                </Grid>
+                            </ScrollViewer>
+                        </Border>
+                    </theme:SystemDropShadowChrome>
+                </Popup>
+                <ToggleButton x:Name="toggleButton" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Grid.ColumnSpan="2" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Style="{StaticResource ComboBoxToggleButton}"/>
+                <Border x:Name="border" Background="{StaticResource TextBox.Static.Background}" Margin="{TemplateBinding BorderThickness}">
+                    <TextBox x:Name="PART_EditableTextBox" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}" Margin="{TemplateBinding Padding}" Style="{StaticResource ComboBoxEditableTextBox}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                </Border>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled" Value="false">
+                    <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                </Trigger>
+                <Trigger Property="IsKeyboardFocusWithin" Value="true">
+                    <Setter Property="Foreground" Value="Black"/>
+                </Trigger>
+                <Trigger Property="HasDropShadow" SourceName="PART_Popup" Value="true">
+                    <Setter Property="Margin" TargetName="shadow" Value="0,0,5,5"/>
+                    <Setter Property="Color" TargetName="shadow" Value="#71000000"/>
+                </Trigger>
+                <Trigger Property="HasItems" Value="false">
+                    <Setter Property="Height" TargetName="dropDownBorder" Value="95"/>
+                </Trigger>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsGrouping" Value="true"/>
+                        <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
+                    </MultiTrigger.Conditions>
+                    <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                </MultiTrigger>
+                <Trigger Property="ScrollViewer.CanContentScroll" SourceName="DropDownScrollViewer" Value="false">
+                    <Setter Property="Canvas.Top" TargetName="opaqueRect" Value="{Binding VerticalOffset, ElementName=DropDownScrollViewer}"/>
+                    <Setter Property="Canvas.Left" TargetName="opaqueRect" Value="{Binding HorizontalOffset, ElementName=DropDownScrollViewer}"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <ControlTemplate x:Key="ComboBoxTemplate" TargetType="{x:Type ComboBox}">
+            <Grid x:Name="templateRoot" SnapsToDevicePixels="true">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition MinWidth="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" Width="0"/>
+                </Grid.ColumnDefinitions>
+                <Popup x:Name="PART_Popup" AllowsTransparency="true" Grid.ColumnSpan="2" IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Margin="1" Placement="Bottom" PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
+                    <theme:SystemDropShadowChrome x:Name="shadow" Color="Transparent" MinWidth="{Binding ActualWidth, ElementName=templateRoot}" MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                        <Border x:Name="dropDownBorder" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" BorderThickness="1" BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}">
+                            <ScrollViewer x:Name="DropDownScrollViewer">
+                                <Grid x:Name="grid" RenderOptions.ClearTypeHint="Enabled">
+                                    <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="0">
+                                        <Rectangle x:Name="opaqueRect" Fill="{Binding Background, ElementName=dropDownBorder}" Height="{Binding ActualHeight, ElementName=dropDownBorder}" Width="{Binding ActualWidth, ElementName=dropDownBorder}"/>
+                                    </Canvas>
+                                    <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                </Grid>
+                            </ScrollViewer>
+                        </Border>
+                    </theme:SystemDropShadowChrome>
+                </Popup>
+                <ToggleButton x:Name="toggleButton" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Grid.ColumnSpan="2" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Style="{StaticResource ComboBoxToggleButton}"/>
+                <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" Content="{TemplateBinding SelectionBoxItem}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" IsHitTestVisible="false" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="HasDropShadow" SourceName="PART_Popup" Value="true">
+                    <Setter Property="Margin" TargetName="shadow" Value="0,0,5,5"/>
+                    <Setter Property="Color" TargetName="shadow" Value="#71000000"/>
+                </Trigger>
+                <Trigger Property="HasItems" Value="false">
+                    <Setter Property="Height" TargetName="dropDownBorder" Value="95"/>
+                </Trigger>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsGrouping" Value="true"/>
+                        <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
+                    </MultiTrigger.Conditions>
+                    <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                </MultiTrigger>
+                <Trigger Property="ScrollViewer.CanContentScroll" SourceName="DropDownScrollViewer" Value="false">
+                    <Setter Property="Canvas.Top" TargetName="opaqueRect" Value="{Binding VerticalOffset, ElementName=DropDownScrollViewer}"/>
+                    <Setter Property="Canvas.Left" TargetName="opaqueRect" Value="{Binding HorizontalOffset, ElementName=DropDownScrollViewer}"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <Style x:Key="ComboBoxStyle" TargetType="{x:Type ComboBox}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+            <Setter Property="Background" Value="{StaticResource ComboBox.Static.Background}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource ComboBox.Static.Border}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="Padding" Value="6,3,5,3"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+            <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+            <Setter Property="Template" Value="{StaticResource ComboBoxTemplate}"/>
+            <Style.Triggers>
+                <Trigger Property="IsEditable" Value="true">
+                    <Setter Property="IsTabStop" Value="false"/>
+                    <Setter Property="Padding" Value="2"/>
+                    <Setter Property="Template" Value="{StaticResource ComboBoxEditableTemplate}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#FF7EB4EA"/>
+        <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#FF569DE5"/>
+        <ControlTemplate x:Key="TextBoxSlyle" TargetType="{x:Type TextBoxBase}">
+            <Border x:Name="border" CornerRadius="10" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" SnapsToDevicePixels="True">
+                <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled" Value="false">
+                    <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.MouseOver.Border}"/>
+                </Trigger>
+                <Trigger Property="IsKeyboardFocused" Value="true">
+                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.Focus.Border}"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        
+
     </Window.Resources>
     <Grid x:Name="MainGrid">
         <Grid.ColumnDefinitions>
@@ -45,109 +383,111 @@
             <RowDefinition Height="0.5*"></RowDefinition>
             <RowDefinition Height="0.5*"></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="1" Grid.Column="0" AutomationProperties.Name="0 0"   />
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="2" Grid.Column="0" AutomationProperties.Name="1 0"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="3" Grid.Column="0" AutomationProperties.Name="2 0"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="4" Grid.Column="0" AutomationProperties.Name="3 0"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="5" Grid.Column="0" AutomationProperties.Name="4 0"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="6" Grid.Column="0" AutomationProperties.Name="5 0"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="7" Grid.Column="0" AutomationProperties.Name="6 0"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="8" Grid.Column="0" AutomationProperties.Name="7 0"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="9" Grid.Column="0" AutomationProperties.Name="8 0"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="1" Grid.Column="0" AutomationProperties.Name="0 0"   />
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="2" Grid.Column="0" AutomationProperties.Name="1 0"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="3" Grid.Column="0" AutomationProperties.Name="2 0"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="4" Grid.Column="0" AutomationProperties.Name="3 0"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="5" Grid.Column="0" AutomationProperties.Name="4 0"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="6" Grid.Column="0" AutomationProperties.Name="5 0"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="7" Grid.Column="0" AutomationProperties.Name="6 0"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="8" Grid.Column="0" AutomationProperties.Name="7 0"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="9" Grid.Column="0" AutomationProperties.Name="8 0"></TextBox>
 
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="1" Grid.Column="1" AutomationProperties.Name="0 1"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="2" Grid.Column="1" AutomationProperties.Name="1 1"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="3" Grid.Column="1" AutomationProperties.Name="2 1"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="4" Grid.Column="1" AutomationProperties.Name="3 1"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="5" Grid.Column="1" AutomationProperties.Name="4 1"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="6" Grid.Column="1" AutomationProperties.Name="5 1"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="7" Grid.Column="1" AutomationProperties.Name="6 1"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="8" Grid.Column="1" AutomationProperties.Name="7 1"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="9" Grid.Column="1" AutomationProperties.Name="8 1"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="1" Grid.Column="1" AutomationProperties.Name="0 1"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="2" Grid.Column="1" AutomationProperties.Name="1 1"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="3" Grid.Column="1" AutomationProperties.Name="2 1"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="4" Grid.Column="1" AutomationProperties.Name="3 1"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="5" Grid.Column="1" AutomationProperties.Name="4 1"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="6" Grid.Column="1" AutomationProperties.Name="5 1"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="7" Grid.Column="1" AutomationProperties.Name="6 1"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="8" Grid.Column="1" AutomationProperties.Name="7 1"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="9" Grid.Column="1" AutomationProperties.Name="8 1"></TextBox>
 
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="1" Grid.Column="2" AutomationProperties.Name="0 2"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="2" Grid.Column="2" AutomationProperties.Name="1 2"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="3" Grid.Column="2" AutomationProperties.Name="2 2"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="4" Grid.Column="2" AutomationProperties.Name="3 2"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="5" Grid.Column="2" AutomationProperties.Name="4 2"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="6" Grid.Column="2" AutomationProperties.Name="5 2"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="7" Grid.Column="2" AutomationProperties.Name="6 2"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="8" Grid.Column="2" AutomationProperties.Name="7 2"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="9" Grid.Column="2" AutomationProperties.Name="8 2"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="1" Grid.Column="2" AutomationProperties.Name="0 2"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="2" Grid.Column="2" AutomationProperties.Name="1 2"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="3" Grid.Column="2" AutomationProperties.Name="2 2"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="4" Grid.Column="2" AutomationProperties.Name="3 2"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="5" Grid.Column="2" AutomationProperties.Name="4 2"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="6" Grid.Column="2" AutomationProperties.Name="5 2"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="7" Grid.Column="2" AutomationProperties.Name="6 2"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="8" Grid.Column="2" AutomationProperties.Name="7 2"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="9" Grid.Column="2" AutomationProperties.Name="8 2"></TextBox>
 
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="1" Grid.Column="3" AutomationProperties.Name="0 3"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="2" Grid.Column="3" AutomationProperties.Name="1 3"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="3" Grid.Column="3" AutomationProperties.Name="2 3"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="4" Grid.Column="3" AutomationProperties.Name="3 3"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="5" Grid.Column="3" AutomationProperties.Name="4 3"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="6" Grid.Column="3" AutomationProperties.Name="5 3"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="7" Grid.Column="3" AutomationProperties.Name="6 3"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="8" Grid.Column="3" AutomationProperties.Name="7 3"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="9" Grid.Column="3" AutomationProperties.Name="8 3"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="1" Grid.Column="3" AutomationProperties.Name="0 3"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="2" Grid.Column="3" AutomationProperties.Name="1 3"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="3" Grid.Column="3" AutomationProperties.Name="2 3"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="4" Grid.Column="3" AutomationProperties.Name="3 3"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="5" Grid.Column="3" AutomationProperties.Name="4 3"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="6" Grid.Column="3" AutomationProperties.Name="5 3"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="7" Grid.Column="3" AutomationProperties.Name="6 3"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="8" Grid.Column="3" AutomationProperties.Name="7 3"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="9" Grid.Column="3" AutomationProperties.Name="8 3"></TextBox>
 
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="1" Grid.Column="4" AutomationProperties.Name="0 4"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="2" Grid.Column="4" AutomationProperties.Name="1 4"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="3" Grid.Column="4" AutomationProperties.Name="2 4"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="4" Grid.Column="4" AutomationProperties.Name="3 4"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="5" Grid.Column="4" AutomationProperties.Name="4 4"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="6" Grid.Column="4" AutomationProperties.Name="5 4"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="7" Grid.Column="4" AutomationProperties.Name="6 4"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="8" Grid.Column="4" AutomationProperties.Name="7 4"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="9" Grid.Column="4" AutomationProperties.Name="8 4"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="1" Grid.Column="4" AutomationProperties.Name="0 4"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="2" Grid.Column="4" AutomationProperties.Name="1 4"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="3" Grid.Column="4" AutomationProperties.Name="2 4"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="4" Grid.Column="4" AutomationProperties.Name="3 4"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="5" Grid.Column="4" AutomationProperties.Name="4 4"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="6" Grid.Column="4" AutomationProperties.Name="5 4"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="7" Grid.Column="4" AutomationProperties.Name="6 4"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="8" Grid.Column="4" AutomationProperties.Name="7 4"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="9" Grid.Column="4" AutomationProperties.Name="8 4"></TextBox>
 
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="1" Grid.Column="5" AutomationProperties.Name="0 5"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="2" Grid.Column="5" AutomationProperties.Name="1 5"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="3" Grid.Column="5" AutomationProperties.Name="2 5"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="4" Grid.Column="5" AutomationProperties.Name="3 5"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="5" Grid.Column="5" AutomationProperties.Name="4 5"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="6" Grid.Column="5" AutomationProperties.Name="5 5"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="7" Grid.Column="5" AutomationProperties.Name="6 5"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="8" Grid.Column="5" AutomationProperties.Name="7 5"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="9" Grid.Column="5" AutomationProperties.Name="8 5"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="1" Grid.Column="5" AutomationProperties.Name="0 5"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="2" Grid.Column="5" AutomationProperties.Name="1 5"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="3" Grid.Column="5" AutomationProperties.Name="2 5"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="4" Grid.Column="5" AutomationProperties.Name="3 5"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="5" Grid.Column="5" AutomationProperties.Name="4 5"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="6" Grid.Column="5" AutomationProperties.Name="5 5"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="7" Grid.Column="5" AutomationProperties.Name="6 5"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="8" Grid.Column="5" AutomationProperties.Name="7 5"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="9" Grid.Column="5" AutomationProperties.Name="8 5"></TextBox>
 
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="1" Grid.Column="6" AutomationProperties.Name="0 6"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="2" Grid.Column="6" AutomationProperties.Name="1 6"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="3" Grid.Column="6" AutomationProperties.Name="2 6"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="4" Grid.Column="6" AutomationProperties.Name="3 6"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="5" Grid.Column="6" AutomationProperties.Name="4 6"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="6" Grid.Column="6" AutomationProperties.Name="5 6"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="7" Grid.Column="6" AutomationProperties.Name="6 6"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="8" Grid.Column="6" AutomationProperties.Name="7 6"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="9" Grid.Column="6" AutomationProperties.Name="8 6"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="1" Grid.Column="6" AutomationProperties.Name="0 6"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="2" Grid.Column="6" AutomationProperties.Name="1 6"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="3" Grid.Column="6" AutomationProperties.Name="2 6"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="4" Grid.Column="6" AutomationProperties.Name="3 6"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="5" Grid.Column="6" AutomationProperties.Name="4 6"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="6" Grid.Column="6" AutomationProperties.Name="5 6"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="7" Grid.Column="6" AutomationProperties.Name="6 6"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="8" Grid.Column="6" AutomationProperties.Name="7 6"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="9" Grid.Column="6" AutomationProperties.Name="8 6"></TextBox>
 
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="1" Grid.Column="7" AutomationProperties.Name="0 7" ></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="2" Grid.Column="7" AutomationProperties.Name="1 7"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="3" Grid.Column="7" AutomationProperties.Name="2 7"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="4" Grid.Column="7" AutomationProperties.Name="3 7"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="5" Grid.Column="7" AutomationProperties.Name="4 7"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="6" Grid.Column="7" AutomationProperties.Name="5 7"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="7" Grid.Column="7" AutomationProperties.Name="6 7"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="8" Grid.Column="7" AutomationProperties.Name="7 7"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="9" Grid.Column="7" AutomationProperties.Name="8 7"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="1" Grid.Column="7" AutomationProperties.Name="0 7" ></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="2" Grid.Column="7" AutomationProperties.Name="1 7"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="3" Grid.Column="7" AutomationProperties.Name="2 7"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="4" Grid.Column="7" AutomationProperties.Name="3 7"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="5" Grid.Column="7" AutomationProperties.Name="4 7"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="6" Grid.Column="7" AutomationProperties.Name="5 7"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="7" Grid.Column="7" AutomationProperties.Name="6 7"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="8" Grid.Column="7" AutomationProperties.Name="7 7"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="9" Grid.Column="7" AutomationProperties.Name="8 7"></TextBox>
 
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="1" Grid.Column="8" AutomationProperties.Name="0 8"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="2" Grid.Column="8" AutomationProperties.Name="1 8"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="3" Grid.Column="8" AutomationProperties.Name="2 8"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="4" Grid.Column="8" AutomationProperties.Name="3 8"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="5" Grid.Column="8" AutomationProperties.Name="4 8"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="6" Grid.Column="8" AutomationProperties.Name="5 8"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="7" Grid.Column="8" AutomationProperties.Name="6 8"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="8" Grid.Column="8" AutomationProperties.Name="7 8"></TextBox>
-        <TextBox Style="{StaticResource SudokuBox}" Grid.Row="9" Grid.Column="8" AutomationProperties.Name="8 8"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="1" Grid.Column="8" AutomationProperties.Name="0 8"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="2" Grid.Column="8" AutomationProperties.Name="1 8"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="3" Grid.Column="8" AutomationProperties.Name="2 8"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="4" Grid.Column="8" AutomationProperties.Name="3 8"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="5" Grid.Column="8" AutomationProperties.Name="4 8"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="6" Grid.Column="8" AutomationProperties.Name="5 8"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="7" Grid.Column="8" AutomationProperties.Name="6 8"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="8" Grid.Column="8" AutomationProperties.Name="7 8"></TextBox>
+        <TextBox Template="{DynamicResource TextBoxSlyle}" Style="{StaticResource SudokuBox}" Grid.Row="9" Grid.Column="8" AutomationProperties.Name="8 8"></TextBox>
 
 
-        <Button x:Name="ReadButton" Content="Зчитати судоку з файлу" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="65" Grid.ColumnSpan="3" Click="ReadButton_Click" BorderThickness="3,3,3,3"/>
-        <Button x:Name="WriteButton" Content="Записати судоку в файл" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="65" Grid.ColumnSpan="3" Grid.Column="6" Click="WriteButton_Click" BorderThickness="3,3,3,3"/>
-        <Button x:Name="ClearButton" Content="Очистити поле" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Height="65" Width="201" Grid.ColumnSpan="3" BorderThickness="3,3,3,3" Click="ClearButton_Click"/>
-        <Button x:Name="SoloveButton" Content="Розвязати" Grid.Column="3" HorizontalAlignment="Center" Grid.Row="10" VerticalAlignment="Center" Grid.ColumnSpan="3" Click="SoloveButton_Click" Height="64" Width="201" Grid.RowSpan="2"/>
-        <ComboBox x:Name="MetodComboBox" HorizontalAlignment="Center" Grid.Row="11" VerticalAlignment="Center" Width="200" Height="33" Grid.ColumnSpan="3" SelectedIndex="10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+        <Button x:Name="ReadButton" Style="{StaticResource EclipceBorderedButton}"  Content="Зчитати судоку з файлу" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="65" Grid.ColumnSpan="3" Click="ReadButton_Click" BorderThickness="3,3,3,3"/>
+        <Button x:Name="WriteButton" Style="{StaticResource EclipceBorderedButton}"  Content="Записати судоку в файл" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="65" Grid.ColumnSpan="3" Grid.Column="6" Click="WriteButton_Click" BorderThickness="3,3,3,3" FontSize="15"/>
+        <Button x:Name="ClearButton" Style="{StaticResource EclipceBorderedButton}"  Content="Очистити поле" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Height="65" Width="201" Grid.ColumnSpan="3" BorderThickness="3,3,3,3" Click="ClearButton_Click" FontSize="15"/>
+        <Button x:Name="SoloveButton" Style="{StaticResource EclipceBorderedButton}" Content="Розвязати" Grid.Column="3" HorizontalAlignment="Center" Grid.Row="10" VerticalAlignment="Center" Grid.ColumnSpan="3" Click="SoloveButton_Click" Height="64" Width="201" Grid.RowSpan="2" FontSize="15" BorderThickness="3,3,3,3" />
+        <ComboBox Style="{DynamicResource ComboBoxStyle}" x:Name="MetodComboBox" HorizontalAlignment="Center" Grid.Row="11" VerticalAlignment="Center" Width="200" Height="33" Grid.ColumnSpan="3" SelectedIndex="10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
             <ComboBoxItem Content="Останнє можливе"/>
             <ComboBoxItem Content="Рекурсивний"/>
             <ComboBoxItem Content="Комбінований"/>
         </ComboBox>
-        <Label Content="Виберіть метод розв'язання:" HorizontalAlignment="Center" Grid.Row="10" VerticalAlignment="Center" Width="200" Height="31" Grid.ColumnSpan="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <Label Style="{DynamicResource LabelStyle}" Content="Виберіть метод розв'язання:" HorizontalAlignment="Center" Grid.Row="10" VerticalAlignment="Center" Width="200" Height="31" Grid.ColumnSpan="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         <GridSplitter Grid.Column="7" Grid.Row="10" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.RowSpan="2" Height="64" Width="0" HorizontalAlignment="Center"/>
-        <Label x:Name="LeftInfLabel" Grid.Column="6" HorizontalAlignment="Center" Grid.Row="10"  Grid.RowSpan="2" VerticalContentAlignment="Center" Width="201" RenderTransformOrigin="0.5,0.5" Margin="0,1,0,-1" Grid.ColumnSpan="3" HorizontalContentAlignment="Center" />
+        <Label Style="{DynamicResource LabelStyle}" x:Name="LeftInfLabel" Grid.Column="6" HorizontalAlignment="Center" Grid.Row="10"  Grid.RowSpan="2" VerticalContentAlignment="Center" Width="201" RenderTransformOrigin="0.5,0.5" Margin="0,1,0,-1" Grid.ColumnSpan="3" HorizontalContentAlignment="Center" />
+        
+
 
     </Grid>
 </Window>

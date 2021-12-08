@@ -94,6 +94,9 @@ namespace SudokuSolover
             }
             sw.Stop();
 
+            if (Output_Sudoku == null)
+                Output_Sudoku = SoloveSimplest(Input_Sudoky);
+
             SolutionInformation inf = new();
             inf.Ticks = sw.ElapsedTicks;
             inf.Miliseconds = (int)sw.ElapsedMilliseconds;
@@ -106,6 +109,8 @@ namespace SudokuSolover
                         counter++;
             inf.InitialFilling = counter / 81;
 
+            if (Output_Sudoku == null)
+                Output_Sudoku = SoloveSimplest(Input_Sudoky);
             int counter2 = 0;
             for (int i = 0; i < 9; i++)
                 for (int j = 0; j < 9; j++)
