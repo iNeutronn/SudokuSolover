@@ -136,10 +136,11 @@ namespace SudokuSolover
             {
                 HashSet<int> Used = new();
                 for (int j = 0; j < 9; j++)
-                    if (Used.Contains(inp[i, j]))
+                    if (inp[i, j] != 0 && Used.Contains(inp[i, j]))
                         return false;
                     else
                         Used.Add(inp[i, j]);
+                Used.Clear();
             }
 
             //Col
@@ -147,10 +148,11 @@ namespace SudokuSolover
             {
                 HashSet<int> Used = new();
                 for (int j = 0; j < 9; j++)
-                    if (Used.Contains(inp[j, i]))
+                    if (inp[j, i]!=0 && Used.Contains(inp[j, i]))
                         return false;
                     else
                         Used.Add(inp[j, i]);
+                Used.Clear();
             }
 
             //Block
@@ -160,10 +162,11 @@ namespace SudokuSolover
                     HashSet<int> Used = new();
                     for (int i = 0; i < 3; i++)
                         for (int j = 0; j < 3; j++)
-                            if (Used.Contains(inp[x * 3 + i, y * 3 + j]))
+                            if (inp[x * 3 + i, y * 3 + j] != 0 && Used.Contains(inp[x * 3 + i, y * 3 + j]))
                                 return false;
                             else
                                 Used.Add(inp[x * 3 + i, y * 3 + j]);
+                    Used.Clear();
 
                 }
 
