@@ -132,10 +132,42 @@ namespace SudokuSolover
         }
         private static bool CheackSudokuСorrectness(int[,] inp)
         {
+            //Row
             for (int i = 0; i < 9; i++)
+            {
+                HashSet<int> Used = new();
                 for (int j = 0; j < 9; j++)
-                    if (inp[i,j] == 0 && GetAllPossibleOptions(i, j,inp).Count == 0)
+                    if (Used.Contains(inp[i, j]))
                         return false;
+                    else
+                        Used.Add(inp[i, j]);
+            }
+
+            //Col
+            for (int i = 0; i < 9; i++)
+            {
+                HashSet<int> Used = new();
+                for (int j = 0; j < 9; j++)
+                    if (Used.Contains(inp[j, i]))
+                        return false;
+                    else
+                        Used.Add(inp[j, i]);
+            }
+
+            //Block
+            for (int x = 0; x < 3; x++)
+                for (int y = 0; y < 3; y++)
+                {
+                    HashSet<int> Used = new();
+                    for (int i = 0; i < 3; i++)
+                        for (int j = 0; j < 3; j++)
+                            if (Used.Contains(inp[x*3 + i, y*3 + j]))
+                                return false;
+                            else
+                                Used.Add(inp[x * 3 + i, y * 3 + j]);
+                        
+                }
+
             return true;
         }
         private bool RecurseSolove(int[,] Pole, bool combi)

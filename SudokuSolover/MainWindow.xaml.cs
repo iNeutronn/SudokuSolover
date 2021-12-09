@@ -137,7 +137,15 @@ namespace SudokuSolover
                 MessageBox.Show("Комбінативний спосіб вимагає виклик способа останнього можливого після кожної інерації рекурсії.", "Увага!", MessageBoxButton.OK, MessageBoxImage.Information);
 
             Sudoku s = new();
-            s.Set(sudoku);
+            try
+            {
+                s.Set(sudoku);
+            }
+            catch (NoSolutionExeption)
+            {
+                MessageBox.Show("Невірний формат", "Помилка!", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
            
             SolutionInformation inf = MetodComboBox.SelectedIndex switch
             {
