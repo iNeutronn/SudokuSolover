@@ -1,20 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SudokuSolover
 {
@@ -27,7 +15,6 @@ namespace SudokuSolover
         int[,] sudoku = new int[9, 9];
         public MainWindow()
         {
-            
             InitializeComponent();
             foreach (UIElement item in MainGrid.Children)
             {
@@ -52,9 +39,9 @@ namespace SudokuSolover
                     int y = int.Parse(st[1]);
                     t.Text = sudoku[y, x] == 0 ? "" : sudoku[y, x].ToString();
                 }
-                catch(FormatException)
+                catch (FormatException)
                 {
-                    
+
                 }
             }
         }
@@ -83,7 +70,7 @@ namespace SudokuSolover
             }
             catch (FileNotFoundException)
             {
-                MessageBox.Show("Не знайдено файл INPUT.TXT","Помилка!",MessageBoxButton.OK,MessageBoxImage.Error);
+                MessageBox.Show("Не знайдено файл INPUT.TXT", "Помилка!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (FormatException)
             {
@@ -127,7 +114,7 @@ namespace SudokuSolover
             UpdateView();
         }
 
-        
+
         private void SoloveButton_Click(object sender, RoutedEventArgs e)
         {
 
@@ -137,8 +124,16 @@ namespace SudokuSolover
                 MessageBox.Show("Комбінативний спосіб вимагає виклик способа останнього можливого після кожної інерації рекурсії.", "Увага!", MessageBoxButton.OK, MessageBoxImage.Information);
 
             Sudoku s = new();
-            s.Set(sudoku);
-           
+            try
+            {
+                s.Set(sudoku);
+            }
+            catch (NoSolutionExeption)
+            {
+                MessageBox.Show("Невірний формат", "Помилка!", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             SolutionInformation inf = MetodComboBox.SelectedIndex switch
             {
                 0 => s.Solove(Metod.LastPossible),
@@ -150,7 +145,7 @@ namespace SudokuSolover
             LeftInfLabel.Content += "Мілісекунди:" + inf.Miliseconds + "\n";
             LeftInfLabel.Content += "Тіки:" + inf.Ticks;
 
-            
+
 
             sudoku = inf.Fiel;
             UpdateView();

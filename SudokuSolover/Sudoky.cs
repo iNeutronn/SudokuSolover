@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace SudokuSolover
@@ -10,10 +9,10 @@ namespace SudokuSolover
         int[,] Input_Sudoky;
         int[,] Output_Sudoku;
         private Stopwatch sw;
-        
+
         private static int[,] SoloveSimplest(int[,] sudoku_Field)
         {
-            bool f = true;//перевіряєм чи алгоритм вніс хоч якісь зміни, якщо ні то далі він уже безсилий
+            bool f = true;
             while (f)
             {
                 f = false;
@@ -23,10 +22,10 @@ namespace SudokuSolover
                     for (int x = 0; x < 9; x++)
                     {
                         if (sudoku_Field[x, y] == 0)
-                        {//формуємо набори чисел які вже не можуть бути в цій клітинці тому що вони вже є 
+                        {
                             List<int> AllPossibleOptions = GetAllPossibleOptions(x, y, sudoku_Field);
 
-                            if (AllPossibleOptions.Count == 1)//якщо можливе лише 1 число то впичуєш його 
+                            if (AllPossibleOptions.Count == 1)
                             {
                                 sudoku_Field[x, y] = AllPossibleOptions[0];
                                 f = true;
@@ -42,7 +41,7 @@ namespace SudokuSolover
             return sudoku_Field;
         }
 
-        
+
         private static List<int> GetAllPossibleOptions(int x, int y, int[,] P)
         {
             HashSet<int> col = new();
@@ -125,17 +124,49 @@ namespace SudokuSolover
         }
         public void Set(int[,] sudoky)
         {
-           
+
             if (!CheackSudokuСorrectness(sudoky))
                 throw new NoSolutionExeption(sudoky);
             Input_Sudoky = sudoky;
         }
         private static bool CheackSudokuСorrectness(int[,] inp)
         {
+            //Row
             for (int i = 0; i < 9; i++)
+            {
+                HashSet<int> Used = new();
                 for (int j = 0; j < 9; j++)
-                    if (inp[i,j] == 0 && GetAllPossibleOptions(i, j,inp).Count == 0)
+                    if (Used.Contains(inp[i, j]))
                         return false;
+                    else
+                        Used.Add(inp[i, j]);
+            }
+
+            //Col
+            for (int i = 0; i < 9; i++)
+            {
+                HashSet<int> Used = new();
+                for (int j = 0; j < 9; j++)
+                    if (Used.Contains(inp[j, i]))
+                        return false;
+                    else
+                        Used.Add(inp[j, i]);
+            }
+
+            //Block
+            for (int x = 0; x < 3; x++)
+                for (int y = 0; y < 3; y++)
+                {
+                    HashSet<int> Used = new();
+                    for (int i = 0; i < 3; i++)
+                        for (int j = 0; j < 3; j++)
+                            if (Used.Contains(inp[x * 3 + i, y * 3 + j]))
+                                return false;
+                            else
+                                Used.Add(inp[x * 3 + i, y * 3 + j]);
+
+                }
+
             return true;
         }
         private bool RecurseSolove(int[,] Pole, bool combi)
@@ -143,7 +174,7 @@ namespace SudokuSolover
             if (combi)
                 Pole = SoloveSimplest(Pole);
 
-           
+
 
             for (int x = 0; x < 9; x++)
                 for (int y = 0; y < 9; y++)
