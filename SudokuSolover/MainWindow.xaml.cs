@@ -12,7 +12,8 @@ namespace SudokuSolover
 
     public partial class MainWindow : Window
     {
-        int[,] sudoku = new int[9, 9];
+        
+        Sudoku sudoku = new Sudoku();
         public MainWindow()
         {
             InitializeComponent();
@@ -49,23 +50,9 @@ namespace SudokuSolover
         {
             try
             {
-                sudoku = new int[9, 9];
-                StreamReader sr = new("INPUT.TXT");
-                for (int i = 0; i < 9; i++)
-                {
-                    string[] inp = sr.ReadLine().Split();
-                    for (int j = 0; j < 9; j++)
-                    {
-                        int n = int.Parse(inp[j]);
-                        if (n is < 0 or > 9)
-                            throw new FormatException();
-                        sudoku[j, i] = n;
-                    }
-                }
-                sr.Close();
-
+                
+                sudoku.ReadFromFile("INPUT.TXT");//TODO: File Selection
                 UpdateView();
-
                 MessageBox.Show("Судоку зчитане з файлу INPUT.TXT");
             }
             catch (FileNotFoundException)
@@ -90,16 +77,7 @@ namespace SudokuSolover
         {
             try
             {
-                StreamWriter sw = new("OUTPUT.TXT");
-                for (int i = 0; i < 9; i++)
-                {
-                    string output = "";
-                    for (int j = 0; j < 9; j++)
-                        output += sudoku[j, i].ToString() + " ";
-
-                    sw.WriteLine(output);
-                }
-                sw.Close();
+                sudoku.WriteIntoFile("INPUT.TXT");
                 MessageBox.Show("Судоку записане в файл OUTPUT.TXT");
             }
             catch
@@ -110,7 +88,9 @@ namespace SudokuSolover
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
-            sudoku = new int[9, 9];
+            
+            sudoku.Clear();
+            
             UpdateView();
         }
 
@@ -123,22 +103,18 @@ namespace SudokuSolover
             else if (MetodComboBox.SelectedIndex == 2)
                 MessageBox.Show("Комбінативний спосіб вимагає виклик способа останнього можливого після кожної інерації рекурсії.", "Увага!", MessageBoxButton.OK, MessageBoxImage.Information);
 
-            Sudoku s = new();
-            try
-            {
-                s.Set(sudoku);
-            }
-            catch (NoSolutionExeption)
+            if (!sudoku.CheackSudokuСorrectness())
             {
                 MessageBox.Show("Невірний формат", "Помилка!", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+            
 
             SolutionInformation inf = MetodComboBox.SelectedIndex switch
             {
-                0 => s.Solove(Metod.LastPossible),
-                1 => s.Solove(Metod.Recourse),
-                2 => s.Solove(Metod.Combi),
+                0 => sudoku.Solove(Metod.LastPossible),
+                1 => sudoku.Solove(Metod.Recourse),
+                2 => sudoku.Solove(Metod.Combi),
                 _ => throw new Exception(),
             };
             LeftInfLabel.Content = "Вирішене: " + (inf.IsItSoloved ? "Так" : "Ні") + "\n";
@@ -147,7 +123,7 @@ namespace SudokuSolover
 
 
 
-            sudoku = inf.Fiel;
+            
             UpdateView();
 
 
